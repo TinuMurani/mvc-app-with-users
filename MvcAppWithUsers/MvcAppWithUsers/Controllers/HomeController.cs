@@ -25,7 +25,7 @@ namespace MvcAppWithUsers.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin,BackOfficeUser")]
+        [Authorize(Policy = "IsAdminOrBackOfficeUser")]
         public IActionResult Privacy()
         {
             return View();

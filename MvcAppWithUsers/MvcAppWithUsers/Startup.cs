@@ -41,9 +41,16 @@ namespace MvcAppWithUsers
             services.AddRazorPages();
 
             services.AddAuthorization(options =>
+            {
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build());
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                options.AddPolicy("IsAdmin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("IsAdminOrBackOfficeUser", policy => policy.RequireRole("Admin", "BackOfficeUser"));
+                options.AddPolicy("IsBackOfficeUser", policy => policy.RequireRole("BackOfficeUser"));
+                options.AddPolicy("IsFrontOfficeUser", policy => policy.RequireRole("FrontOfficeUser"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
